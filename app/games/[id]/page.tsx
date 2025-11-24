@@ -2,20 +2,15 @@ import Link from "next/link";
 import db from "@/lib/db";
 import DeleteButton from "./DeleteButton"; 
 
-// Perhatikan: Tipe params diubah menjadi Promise
 export default async function GameDetail({ params }: { params: Promise<{ id: string }> }) {
   
-  // 1. WAJIB: Lakukan await pada params sebelum mengambil id
   const { id } = await params;
 
-  // Debugging: Lihat di terminal VS Code kamu, apakah ID-nya muncul angka?
   console.log("Sedang membuka detail untuk Game ID:", id);
 
-  // 2. Query ke Database
   const stmt = db.prepare('SELECT * FROM games WHERE id = ?');
   const game: any = stmt.get(id);
 
-  // 3. Jika game tidak ditemukan
   if (!game) {
     return (
       <div className="container mt-5 text-center">
@@ -26,7 +21,6 @@ export default async function GameDetail({ params }: { params: Promise<{ id: str
     );
   }
 
-  // 4. Jika ditemukan, tampilkan detail
   return (
     <div className="container mt-5">
       <div className="card shadow">
@@ -63,7 +57,6 @@ export default async function GameDetail({ params }: { params: Promise<{ id: str
             <Link href={`/games/${game.id}/edit`} className="btn btn-warning text-white">
                 Edit
             </Link>
-            {/* Kita belum buat Edit, nanti bisa ditambahkan */}
             <DeleteButton id={game.id} />
           </div>
         </div>

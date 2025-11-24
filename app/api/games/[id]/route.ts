@@ -1,24 +1,19 @@
 import { NextResponse } from 'next/server';
 import db from '@/lib/db';
 
-// Perhatikan tipe data params diubah menjadi Promise
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // 1. WAJIB: Await params sebelum mengambil ID
     const { id } = await params;
 
-    console.log("Mencoba menghapus Game ID:", id); // Cek terminal VS Code saat tombol ditekan
+    console.log("Mencoba menghapus Game ID:", id);
 
-    // 2. Jalankan perintah SQL Delete
     const stmt = db.prepare('DELETE FROM games WHERE id = ?');
     const result = stmt.run(id);
 
-    // 3. Cek apakah ada baris yang terhapus
     if (result.changes === 0) {
-        // Jika 0, berarti ID tidak ditemukan di database
         return NextResponse.json({ message: "Game not found" }, { status: 404 });
     }
 
@@ -35,10 +30,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params; // 1. Await params (Next.js 15)
-    const body = await request.json(); // 2. Ambil data baru dari form
+    const { id } = await params; 
+    const body = await request.json();
 
-    // 3. Update database
     const stmt = db.prepare(`
       UPDATE games 
       SET title = @title, 

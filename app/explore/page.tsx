@@ -1,10 +1,9 @@
 import Link from "next/link";
 
-// Tipe data dari CheapShark
 interface DealGame {
-  internalName: string; // Nama Game
+  internalName: string;
   title: string;
-  thumb: string;        // URL Gambar Kecil
+  thumb: string;     
   steamAppID: string;
   salePrice: string;
   normalPrice: string;
@@ -13,8 +12,6 @@ interface DealGame {
 }
 
 async function getGameDeals() {
-  // Kita ambil daftar deal dari Store ID 1 (Steam)
-  // sort by Metacritic (Rating tertinggi) agar game-nya bagus-bagus
   const res = await fetch(
     'https://www.cheapshark.com/api/1.0/deals?storeID=1&sortBy=Metacritic&pageSize=120', 
     { cache: 'no-store' }
@@ -29,9 +26,6 @@ async function getGameDeals() {
 
 export default async function ExplorePage() {
   const games: DealGame[] = await getGameDeals();
-
-  // Helper function untuk mendapatkan gambar kualitas tinggi dari Steam
-  // Karena gambar default CheapShark agak buram (thumbnail)
   const getHighResImage = (steamAppID: string, thumb: string) => {
     if(steamAppID) {
       return `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${steamAppID}/header.jpg`;
@@ -53,7 +47,6 @@ export default async function ExplorePage() {
         {games.map((game) => (
           <div key={game.dealID} className="col-md-3 mb-4">
             <div className="card h-100 shadow-sm border-0">
-              {/* Kita panggil gambar dari server Steam biar jernih */}
               <img 
                 src={getHighResImage(game.steamAppID, game.thumb)} 
                 className="card-img-top" 

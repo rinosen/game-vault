@@ -1,10 +1,7 @@
-// lib/db.ts
 import Database from 'better-sqlite3';
 
-// Ini akan membuat file 'games.db' otomatis jika belum ada
 const db = new Database('games.db');
 
-// Buat tabel jika belum ada (Schema Manual)
 const createTable = () => {
   db.exec(`
     CREATE TABLE IF NOT EXISTS games (
@@ -19,7 +16,6 @@ const createTable = () => {
   `);
 };
 
-// Jalankan fungsi buat tabel saat file ini dipanggil pertama kali
 createTable();
 
 export default db;

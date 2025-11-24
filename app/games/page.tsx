@@ -1,7 +1,6 @@
 import Link from "next/link";
-import db from "@/lib/db"; // Kita import koneksi database langsung
+import db from "@/lib/db";
 
-// Definisikan tipe data
 interface Game {
   id: number;
   title: string;
@@ -10,11 +9,9 @@ interface Game {
   rating: number;
 }
 
-export const dynamic = 'force-dynamic'; // Pastikan data selalu fresh saat direfresh
+export const dynamic = 'force-dynamic'; 
 
 export default function GameList() {
-  // SOLUSI: Jangan pakai fetch(), tapi panggil DB langsung.
-  // Ini berjalan di server, jadi aman & cepat.
   const stmt = db.prepare('SELECT * FROM games ORDER BY created_at DESC');
   const games = stmt.all() as Game[];
 

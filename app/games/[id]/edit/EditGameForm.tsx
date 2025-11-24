@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// Tipe data props
 interface Game {
   id: number;
   title: string;
@@ -16,7 +15,6 @@ interface Game {
 export default function EditGameForm({ game }: { game: Game }) {
   const router = useRouter();
   
-  // State diisi dengan data awal dari database (game.*)
   const [form, setForm] = useState({
     title: game.title,
     platform: game.platform,
@@ -31,13 +29,11 @@ export default function EditGameForm({ game }: { game: Game }) {
     e.preventDefault();
     setIsSaving(true);
 
-    // Kirim request PUT
     await fetch(`/api/games/${game.id}`, {
       method: "PUT",
       body: JSON.stringify(form),
     });
 
-    // Refresh dan kembali ke halaman detail
     router.refresh(); 
     router.push(`/games/${game.id}`);
   };
