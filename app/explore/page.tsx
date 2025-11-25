@@ -50,7 +50,7 @@ export default async function ExplorePage() {
               <img 
                 src={getHighResImage(game.steamAppID, game.thumb)} 
                 className="card-img-top" 
-                alt={game.title}
+                alt={game.title}  
                 style={{ height: "160px", objectFit: "cover" }} 
               />
               

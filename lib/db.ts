@@ -11,6 +11,7 @@ const createTable = () => {
       status TEXT NOT NULL,
       rating INTEGER,
       review TEXT,
+      image_url TEXT, 
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
